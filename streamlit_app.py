@@ -91,4 +91,3 @@ st.altair_chart(alt.Chart(pd.DataFrame(data), height=500, width=500)
 st.altair_chart(alt.Chart(h).mark_line().encode(x=h.index, y=h.price)
 
 
-
