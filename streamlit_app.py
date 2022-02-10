@@ -68,10 +68,6 @@ def historico(ticket=''):
     
 h,i=historico('tx26')
 
-print(h)
-h.cierre.plot()
-i.plot()
-
 total_points = st.slider("Number of points in spiral", 1, 5000, 2000)
 num_turns = st.slider("Number of turns in spiral", 1, 100, 9)
 
