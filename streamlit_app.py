@@ -67,6 +67,8 @@ def historico(ticket=''):
 
     
 h,i=historico('tx26')
+
+print(h)
 h.cierre.plot()
 i.plot()
 
