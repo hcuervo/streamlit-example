@@ -88,6 +88,6 @@ st.altair_chart(alt.Chart(pd.DataFrame(data), height=500, width=500)
     .mark_circle(color='#0068c9', opacity=0.5)
     .encode(x='x:Q', y='y:Q'))
 
-st.altair_chart(alt.Chart(h).mark_line().encode(x=h.index, y=h.price)
+st.altair_chart(alt.Chart(h).mark_line().encode(x=h.index, y=h.price))
 
 
