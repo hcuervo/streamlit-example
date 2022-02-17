@@ -91,6 +91,6 @@ st.altair_chart(alt.Chart(pd.DataFrame(data), height=500, width=500)
 x = h.index.values
 y = h.cierre.values
 
-st.altair_chart(alt.Chart(h).mark_line().encode(x='x:Q', y='y:Q'))
+st.altair_chart(alt.Chart(h).mark_line().encode(x=x, y=y))
 
 
