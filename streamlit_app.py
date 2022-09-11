@@ -1,96 +1,55 @@
-from collections import namedtuple
-import altair as alt
-import math
-import pandas as pd
-import streamlit as st
-# Importar librerias
-import requests
 
-from datetime import datetime
+DataFrame Demo
+This demo shows how to use st.write to visualize Pandas DataFrames. (Data courtesy of the UN Data Explorer.)
 
-import pandas as pd
-import json as json
-import numpy as np
-import matplotlib.pyplot as plt
-
-from bs4 import BeautifulSoup # fundamental para scrapping
- 
-"""
-# Welcome to Streamlit!!!
-
-Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:
-
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
-
-In the meantime, below is an example of what you can do with just a few lines of code:
-"""
-
-def historico(ticket=''):
-    # Link a la página que contiene la tabla
-    # Atención: dolar-plus.com entrega algo más de un año de historico
-    url  = 'https://www.rava.com/perfil/'+ticket
-
-    # Cargar la página
-    resp = requests.get(url)
-
-    # Interpretar la respuesta
-    soup = BeautifulSoup(resp.text, "html.parser")
-    
-    # Armar la respuesta según la página de RAVA Online
-    res = soup.find('perfil-p')[':res']
-    data = json.loads(res)
-    
-    
-    df=pd.DataFrame()
-    
-
-    df = pd.json_normalize(data['coti_hist'])
-    df.set_index('fecha',inplace=True)
-
-    X = []
-    Y = []
-    
-    if type(data['grafico_intradiario']) == list:
-        for each in data['grafico_intradiario']:
-            date = datetime.strptime(each['fecha']+' '+each['hora'], '%Y-%m-%d %H:%M:%S')
-            X.append(date)
-            Y.append(float(each['ultimo']))
-
-    intra = pd.DataFrame()
-    intra['time']=X
-    intra['price']=Y
-    intra.set_index('time',inplace=True)
-
-    
-    return(df,intra)
-
-    
-h,i=historico('tx26')
-
-total_points = st.slider("Number of points in spiral", 1, 5000, 2000)
-num_turns = st.slider("Number of turns in spiral", 1, 100, 9)
-
-Point = namedtuple('Point', 'x y')
-data = []
-
-points_per_turn = total_points / num_turns
-
-for curr_point_num in range(total_points):
-    curr_turn, i = divmod(curr_point_num, points_per_turn)
-    angle = (curr_turn + 1) * 2 * math.pi * i / points_per_turn
-    radius = curr_point_num / total_points
-    x = radius * math.cos(angle)
-    y = radius * math.sin(angle)
-    data.append(Point(x, y))
-
-st.altair_chart(alt.Chart(pd.DataFrame(data), height=500, width=500)
-    .mark_circle(color='#0068c9', opacity=0.5)
-    .encode(x='x:Q', y='y:Q'))
-
-x = h.index.values
-y = h.cierre.values
-
-st.altair_chart(alt.Chart(h).mark_line().encode(x=x, y=y))
+Choose countries
+Argentina
+Gross Agricultural Production ($B)
 
 
+
+
+Type to search
+
+Code
+
+@st.cache
+def get_UN_data():
+    AWS_BUCKET_URL = "http://streamlit-demo-data.s3-us-west-2.amazonaws.com"
+    df = pd.read_csv(AWS_BUCKET_URL + "/agri.csv.gz")
+    return df.set_index("Region")
+
+try:
+    df = get_UN_data()
+    countries = st.multiselect(
+        "Choose countries", list(df.index), ["China", "United States of America"]
+    )
+    if not countries:
+        st.error("Please select at least one country.")
+    else:
+        data = df.loc[countries]
+        data /= 1000000.0
+        st.write("### Gross Agricultural Production ($B)", data.sort_index())
+
+        data = data.T.reset_index()
+        data = pd.melt(data, id_vars=["index"]).rename(
+            columns={"index": "year", "value": "Gross Agricultural Product ($B)"}
+        )
+        chart = (
+            alt.Chart(data)
+            .mark_area(opacity=0.3)
+            .encode(
+                x="year:T",
+                y=alt.Y("Gross Agricultural Product ($B):Q", stack=None),
+                color="Region:N",
+            )
+        )
+        st.altair_chart(chart, use_container_width=True)
+except URLError as e:
+    st.error(
+        """
+        **This demo requires internet access.**
+        Connection error: %s
+    """
+        % e.reason
+    )
