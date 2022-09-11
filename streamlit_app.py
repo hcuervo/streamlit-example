@@ -1,8 +1,13 @@
-import matplotlib.pyplot as plt
-import numpy as np
+"""
+# My first app
+Here's our first attempt at using data to create a table:
+"""
 
-arr = np.random.normal(1, 1, size=100)
-fig, ax = plt.subplots()
-ax.hist(arr, bins=20)
+import streamlit as st
+import pandas as pd
+df = pd.DataFrame({
+  'first column': [1, 2, 3, 4],
+  'second column': [10, 20, 30, 40]
+})
 
-st.pyplot(fig)
+df
