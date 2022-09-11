@@ -1,28 +1,36 @@
-ticker= ['YPFD','AGRO','AUSO','BHIP','BOLT','BPAT','BRIO','CADO','CAPX','CARC','CECO2',
-         'CELU','CGPA2','CTIO','DGCU2','DYCA','FERR','FIPL','GAMI','GARO','GBAN',
-         'GCLA','GRIM','HARG','HAVA','INTR','INVJ','IRCP','IRSA','LEDE','LOMA','LONG',
-         'METR','MOLA','MOLI','MORI','OEST','PATA','PGR','POLL','RICH','RIGO','ROSE',
-         'SAMI','SEMI','TGLT']
+stock_tickers = ['AAPL', 'GOOGL','PG','TCS.BO','MSFT','TWTR','NFLX','INFY.BO','WIPRO.BO','SBIN.NS',
+                'HDFC.NS','ICICIBANK.NS','RELIANCE.NS','TECHM.NS','HINDUNILVR.NS','BHARTIARTL.NS',
+                'HCLTECH.NS','ASIANPAINT.NS','LT.NS','AXISBANK.NS','MARUTI.NS','TATAMOTORS.NS','TATASTEEL.NS',
+                'NESTLEIND.NS','AMZN','ACN','ADBE','ORCL','FB','CIPLA6.BO','KPITTECH.NS','BSOFT.NS','LTI.NS','MINDTREE.BO','MPHASIS.NS','NAZARA.NS','NAUKRI.NS',
+                'TATAELXSI.NS','HAPPSTMNDS.NS','LUPIN.NS','GLAND.NS','ADANITRANS.NS','ADANIGREEN.NS']
 
+from ast import Pass
+from email.mime import image
+from urllib.parse import scheme_chars
+from nbformat import write
 import streamlit as st
+from optparse import Option
+from tracemalloc import start
+import yfinance as yf 
 import pandas as pd
-
-import pandas_datareader as data
-import pandas as pd
-
-data_source = 'yahoo'
-start_date = '2016-01-01'
-end_date = '2021-11-30'
-Google = data.DataReader('GOOG', data_source, start_date, end_date)
-Amazon = data.DataReader('AMZN', data_source, start_date, end_date)
-Microsoft = data.DataReader('MSFT', data_source, start_date, end_date)
-Apple = data.DataReader('AAPL', data_source, start_date, end_date)
-Facebook = data.DataReader('FB', data_source, start_date, end_date)
-
+from tickers import stock_tickers
+import datetime
+from streamlit_option_menu import option_menu 
 import matplotlib.pyplot as plt
-import plotly.express as px
-import plotly.graph_objects as go
+import numpy as np
+from PIL import Image
+import cufflinks as cf
 
-chart = px.line(df.xs(key='Close', axis=1, level='Stock Info')[['GOOG', 'AMZN']])
 
-st.pyplot(chart)
+
+image1 = Image.open('icon.png')
+st.set_page_config(page_title="Stock Market Analysis", page_icon= image1)
+image = Image.open('main.png')
+st.image(image)
+
+hide_menu_style = """
+                <style>
+                #MainMenu {visibility: hidden; footer {visibility: hidden;}}
+                </style>
+                """
+st.markdown(hide_menu_style, unsafe_allow_html=True)
