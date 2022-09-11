@@ -15,8 +15,8 @@ import pandas as pd
 import yfinance as yf
 import streamlit as st
 import datetime as dt
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
+#import plotly.graph_objects as go
+#from plotly.subplots import make_subplots
 import numpy as np
 
 snp500 = pd.read_csv("Datasets/SP500.csv")
