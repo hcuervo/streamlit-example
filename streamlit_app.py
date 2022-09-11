@@ -22,6 +22,7 @@ Facebook = data.DataReader('FB', data_source, start_date, end_date)
 import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
-%matplotlib inline
 
-px.line(df.xs(key='Close', axis=1, level='Stock Info')[['GOOG', 'AMZN']])
+chart = px.line(df.xs(key='Close', axis=1, level='Stock Info')[['GOOG', 'AMZN']])
+
+st.pyplot(chart)
