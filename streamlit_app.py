@@ -1,17 +1,4 @@
 
-DataFrame Demo
-This demo shows how to use st.write to visualize Pandas DataFrames. (Data courtesy of the UN Data Explorer.)
-
-Choose countries
-Argentina
-Gross Agricultural Production ($B)
-
-
-
-
-Type to search
-
-Code
 
 @st.cache
 def get_UN_data():
