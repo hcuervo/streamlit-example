@@ -11,7 +11,7 @@ Created on Fri Mar 12 17:57:42 2021
 """
 
 import pandas as pd
-!pip install yfinance
+
 import yfinance as yf
 import streamlit as st
 import datetime as dt
