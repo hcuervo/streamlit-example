@@ -81,7 +81,7 @@ for each in ticker:
         chart.transform_regression(
             "Date", each, method="poly", order=order, as_=["x", str(order)]
         )
-        .mark_line()
+        .mark_line(color='blue')
         .transform_fold([str(order)], as_=["Periods", "Price"])
         .encode(alt.Color("degree:N"))
         for order in degree_list
