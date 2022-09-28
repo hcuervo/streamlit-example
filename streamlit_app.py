@@ -24,7 +24,6 @@ def get_data():
 def tendencia(df2,periods=periods):
     df2 = df2.tail(max(periods)).fillna(method='bfill')
 
-    lista = []
     for period in periods:
         # Calcular tendencias
         Y = df2.tail(period).iloc[:,0]
@@ -59,12 +58,12 @@ st.title(ticker)
 
 
 
-chart = alt.Chart(lista).mark_circle(color="white").encode(
+chart = alt.Chart(df2).mark_circle(color="white").encode(
                 x='Date',
                 y=each
                 )
 polynomial_fit = [
-    chart.Chart(lista.tail(period)).mark_line(color="white").encode(
+    chart.Chart(df2.tail(period)).mark_line(color="white").encode(
                 x='Date',
                 y=each
                 )
