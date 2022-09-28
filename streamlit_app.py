@@ -56,22 +56,23 @@ ticker = st.sidebar.multiselect(
 
 st.title(ticker)
 
+for each in ticker:
+    lista = tendencia(pd.DataFrame(df[each])).reset_index()
 
+    chart = alt.Chart(lista).mark_circle(color="white").encode(
+                    x='Date',
+                    y=each
+                    )
+    polynomial_fit = [
+        chart.Chart(lista.tail(period)).mark_line(color="white").encode(
+                    x='Date',
+                    y=each
+                    )
+        .mark_line(color='white')
+        for period in periods ]
 
-chart = alt.Chart(df2).mark_circle(color="white").encode(
-                x='Date',
-                y=each
-                )
-polynomial_fit = [
-    chart.Chart(df2.tail(period)).mark_line(color="white").encode(
-                x='Date',
-                y=each
-                )
-    .mark_line(color='white')
-    for period in periods ]
-
-alt.layer(chart, *polynomial_fit)
-st.altair_chart(chart)
+    alt.layer(chart, *polynomial_fit)
+    st.altair_chart(chart)
 
 
 
