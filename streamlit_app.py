@@ -70,7 +70,7 @@ for each in ticker:
 
     fig = plt.figure(figsize=(4,3))
 
-    chart = alt.Chart(lista).mark_line().encode(
+    chart = alt.Chart(lista).mark_circle(color="black").encode(
         x='Date',
         y=each
     )
