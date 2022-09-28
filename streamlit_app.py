@@ -57,37 +57,22 @@ ticker = st.sidebar.multiselect(
 
 st.title(ticker)
 
-fig = plt.figure(figsize=(4,3))
-for each in ticker:
-    lista = tendencia(pd.DataFrame(df[each])).reset_index()
-    sns.scatterplot(data=lista, x='Date', y=each,alpha=0.5)
-    sns.lineplot(data=lista, x='Date', y=90)
-    sns.lineplot(data=lista, x='Date', y=30)
-    sns.lineplot(data=lista, x='Date', y=10)
-    sns.lineplot(data=lista, x='Date', y=3)
 
-    st.pyplot(fig)
 
-    fig = plt.figure(figsize=(4,3))
-    
-    degree_list = [90, 30, 10, 3]
+chart = alt.Chart(lista).mark_circle(color="white").encode(
+                x='Date',
+                y=each
+                )
+polynomial_fit = [
+    chart.Chart(lista.tail(period)).mark_line(color="white").encode(
+                x='Date',
+                y=each
+                )
+    .mark_line(color='white')
+    for period in periods ]
 
-    chart = alt.Chart(lista).mark_circle(color="white").encode(
-                    x='Date',
-                    y=each
-                    )
-    chart
-    
-    polynomial_fit = [
-        chart.Chart(lista.tail(period)).mark_line(color="white").encode(
-                    x='Date',
-                    y=each
-                    )
-        .mark_line(color='white')
-        for period in periods ]
-
-    alt.layer(chart, *polynomial_fit)
-    st.altair_chart(chart)
+alt.layer(chart, *polynomial_fit)
+st.altair_chart(chart)
 
 
 
