@@ -4,3 +4,5 @@ streamlit
 beautifulsoup4
 matplotlib 
 yfinance
+statsmodels
+plotly_express
