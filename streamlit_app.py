@@ -87,7 +87,7 @@ for each in ticker:
         for order in degree_list
         ]
 
-    alt.layer(base, *polynomial_fit)
+    alt.layer(chart, *polynomial_fit)
     st.altair_chart(chart)
 
 
