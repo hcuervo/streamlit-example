@@ -76,16 +76,15 @@ for each in ticker:
                     x='Date',
                     y=each
                     )
+    chart
     
     polynomial_fit = [
-        chart.transform_regression(
-                "Date", each, method="poly", order=1, as_=["x", str(1)]
-                )
+        chart.Chart(lista.tail(period)).mark_line(color="white").encode(
+                    x='Date',
+                    y=each
+                    )
         .mark_line(color='white')
-        .transform_fold([str(1)], as_=["Periods", "Price"])
-        .encode(alt.Color("degree:N"))
-        for periods in periods
-        ]
+        for period in periods ]
 
     alt.layer(chart, *polynomial_fit)
     st.altair_chart(chart)
