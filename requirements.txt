@@ -6,3 +6,4 @@ matplotlib
 yfinance
 statsmodels
 plotly_express
+seaborn
