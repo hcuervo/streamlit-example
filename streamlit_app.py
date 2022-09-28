@@ -63,15 +63,13 @@ for each in ticker:
                     x='Date',
                     y=each
                     )
-    polynomial_fit = [
-        alt.Chart(lista.tail(period)).mark_line(color="white").encode(
+    for period in periods:
+        trend = alt.Chart(lista[[period]].tail(period)).mark_line(color="white").encode(
                     x='Date',
                     y=each
                     )
-        .mark_line(color='white')
-        for period in periods ]
-
-    alt.layer(chart, *polynomial_fit)
+        chart = chart + trend
+    
     st.altair_chart(chart)
 
 
