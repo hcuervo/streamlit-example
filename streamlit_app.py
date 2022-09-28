@@ -64,7 +64,7 @@ for each in ticker:
                     y=each
                     )
     polynomial_fit = [
-        chart.Chart(lista.tail(period)).mark_line(color="white").encode(
+        alt.Chart(lista.tail(period)).mark_line(color="white").encode(
                     x='Date',
                     y=each
                     )
