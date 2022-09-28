@@ -79,12 +79,12 @@ for each in ticker:
     
     polynomial_fit = [
         chart.transform_regression(
-            "Date", each, method="poly", order=order, as_=["x", str(order)]
-        )
-        .mark_line(color='blue')
-        .transform_fold([str(order)], as_=["Periods", "Price"])
+                "Date", each, method="poly", order=1, as_=["x", str(1)]
+                )
+        .mark_line(color='white')
+        .transform_fold([str(1)], as_=["Periods", "Price"])
         .encode(alt.Color("degree:N"))
-        for order in degree_list
+        for periods in periods
         ]
 
     alt.layer(chart, *polynomial_fit)
