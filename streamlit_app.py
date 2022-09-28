@@ -70,10 +70,22 @@ for each in ticker:
 
     fig = plt.figure(figsize=(4,3))
 
-    chart = alt.Chart(lista).mark_circle(color="black").encode(
-        x='Date',
-        y=each
-    )
+    chart = alt.Chart(lista).mark_circle(color="white").encode(
+                    x='Date',
+                    y=each
+                    )
+    
+    polynomial_fit = [
+        base.transform_regression(
+            "Date", each, method="poly", order=order, as_=["x", str(order)]
+        )
+        .mark_line()
+        .transform_fold([str(order)], as_=["degree", "y"])
+        .encode(alt.Color("degree:N"))
+        for order in degree_list
+        ]
+
+    alt.layer(base, *polynomial_fit)
     st.altair_chart(chart)
 
 
