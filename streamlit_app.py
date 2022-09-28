@@ -1,10 +1,3 @@
-# @Email:  contact@pythonandvba.com
-# @Website:  https://pythonandvba.com
-# @YouTube:  https://youtube.com/c/CodingIsFun
-# @Project:  Sales Dashboard w/ Streamlit
-
-
-
 import pandas as pd  # pip install pandas openpyxl
 import numpy as np
 import statsmodels.api as sm
@@ -12,6 +5,7 @@ import plotly.express as px  # pip install plotly-express
 import streamlit as st  # pip install streamlit
 import seaborn as sns
 import matplotlib.pyplot as plt
+import altair as alt
 
 import yfinance as yf
 
@@ -76,8 +70,11 @@ for each in ticker:
 
     fig = plt.figure(figsize=(4,3))
 
-
-
+    chart = alt.Chart(lista).mark_line().encode(
+        x='Date',
+        y=each
+    )
+    st.altair_chart(chart)
 
 
 
