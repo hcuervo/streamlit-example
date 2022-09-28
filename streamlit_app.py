@@ -69,6 +69,8 @@ for each in ticker:
     st.pyplot(fig)
 
     fig = plt.figure(figsize=(4,3))
+    
+    degree_list = [90, 30, 10, 3]
 
     chart = alt.Chart(lista).mark_circle(color="white").encode(
                     x='Date',
