@@ -57,15 +57,15 @@ ticker = st.sidebar.multiselect(
 st.title(ticker)
 
 for each in ticker:
-    lista = tendencia(pd.DataFrame(df[each])).reset_index()
+    lista = tendencia(pd.DataFrame(df[each]))
 
-    chart = alt.Chart(lista).mark_circle(color="white").encode(
-                    x='Date',
+    chart = alt.Chart(lista).mark_point(color="white").encode(
+                    x='index:T',
                     y=each
                     )
     for period in periods:
         trend = alt.Chart(lista[[period]].tail(period)).mark_line(color="white").encode(
-                    x='Date',
+                    x='index:T',
                     y=each
                     )
         chart = chart + trend
