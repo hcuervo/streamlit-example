@@ -59,19 +59,16 @@ st.title(ticker)
 for each in ticker:
     lista = tendencia(pd.DataFrame(df[each]))
 
-    chart = alt.Chart(lista).mark_point(color="white").encode(
+    base = alt.Chart(lista).mark_point(color="white").encode(
                     x='index:T',
                     y=each
                     )
-    for period in periods:
-        trend = alt.Chart(lista[[period]].tail(period)).mark_line(color="white").encode(
-                    x='index:T',
-                    y=each
-                    )
-        chart = chart + trend
+    alt.layer(base.mark_line(color='blue').encode(y=90),
+              base.mark_line(color='red').encode(y=30)
+              )
     
-    st.altair_chart(chart)
-
+    st.altair(base)
+    
 
 
 
